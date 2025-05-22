@@ -1,13 +1,7 @@
 <!-- Index template -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>FastAPI + Jinja2</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
-</head>
-<body>
-    <h1>{{ message }}</h1>
-    <script src="/static/js/app.js"></script>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Início - DeskTrack{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-4">Bem-vindo ao DeskTrack</h1>
+<p class="mb-2">Sistema de Registro de Atividades em Redes.</p>
+{% endblock %}
