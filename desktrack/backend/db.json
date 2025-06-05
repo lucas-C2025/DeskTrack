@@ -1,0 +1,17 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "1234"
+    }
+  ],
+  "devices": [
+    {
+      "nome": "desktop",
+      "ip": "10.1.1.1",
+      "id": 1
+    }
+  ],
+  "activities": []
+}

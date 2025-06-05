@@ -1,0 +1,62 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DeskTrack</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+  
+  <header class="flex justify-between mb-6">
+    <h1 class="text-2xl font-bold">Dashboard</h1>
+    <a href="index.html" class="text-red-500">Sair</a>
+  </header>
+  
+  <section class="mb-6">
+    <h2 class="text-xl mb-4">Cadastrar Dispositivo</h2>
+    <form id="deviceForm" class="bg-white p-4 rounded shadow">
+      <input name="nome" placeholder="Nome" class="w-full mb-2 p-2 border rounded" required>
+      <input name="ip" placeholder="IP" class="w-full mb-2 p-2 border rounded" required>
+      <input name="tipo" placeholder="Tipo" class="w-full mb-2 p-2 border rounded" required>
+      <input name="fabricante" placeholder="Fabricante" class="w-full mb-2 p-2 border rounded" required>
+      <input name="localizacao" placeholder="Localização" class="w-full mb-2 p-2 border rounded" required>
+      <select name="status" class="w-full mb-2 p-2 border rounded" required>
+        <option value="ativo">Ativo</option>
+        <option value="manutenção">Manutenção</option>
+        <option value="desativado">Desativado</option>
+      </select>
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Adicionar</button>
+    </form>
+  </section>
+  
+  <section class="mb-6">
+    <h2 class="text-xl mb-4">Registrar Atividade</h2>
+    <form id="activityForm" class="bg-white p-4 rounded shadow">
+      <input name="data_hora" type="datetime-local" class="w-full mb-2 p-2 border rounded" required>
+      <input name="tecnico_responsavel" placeholder="Técnico Responsável" class="w-full mb-2 p-2 border rounded" required>
+      <input name="descricao" placeholder="Descrição" class="w-full mb-2 p-2 border rounded" required>
+      <input name="dispositivo" placeholder="Dispositivo Envolvido" class="w-full mb-2 p-2 border rounded" required>
+      <select name="tipo" class="w-full mb-2 p-2 border rounded" required>
+        <option value="configuração">Configuração</option>
+        <option value="teste">Teste</option>
+        <option value="incidente">Incidente</option>
+        <option value="resolução">Resolução</option>
+        <option value="anotação">Anotação</option>
+      </select>
+      <input name="severidade" placeholder="Severidade (opcional)" class="w-full mb-2 p-2 border rounded">
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Registrar</button>
+    </form>
+  </section>
+  
+  <section>
+    <h2 class="text-xl mb-4">Dispositivos Cadastrados</h2>
+    <ul id="deviceList" class="bg-white p-4 rounded shadow"></ul>
+  </section>
+  
+  <section class="mt-6">
+    <h2 class="text-xl mb-4">Atividades Registradas</h2>
+    <ul id="activityList" class="bg-white p-4 rounded shadow"></ul>
+  </section>
+  
+  <script type="module" src="js/dashboard.js"></script>
+  </body>
