@@ -1,19 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - DeskTrack</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/style.css">
-  </head>
-  <body>
-  
-  <form id="loginForm" class="bg-white p-8 rounded shadow-md w-80">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - DeskTrack</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+<header class="bg-green-700 text-white p-4">
+  <h1 class="text-xl font-bold">DeskTrack - Login</h1>
+</header>
+
+<main class="container mx-auto py-12">
+  <form id="loginForm" class="bg-white p-8 rounded shadow-md w-80 mx-auto">
     <h2 class="text-2xl font-bold mb-4">Login</h2>
     <input name="username" type="text" placeholder="Usuário" class="w-full mb-4 p-2 border rounded" required>
     <input name="password" type="password" placeholder="Senha" class="w-full mb-4 p-2 border rounded" required>
-    <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded">Entrar</button>
+    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded">Entrar</button>
   </form>
-  
-  <script type="module" src="js/auth.js"></script>
-  </body>
-  <script type="module" src="js/auth.js"></script>
+</main>
+
+<footer class="bg-gray-200 mt-12 py-4 text-center text-sm">
+  &copy; 2025 DeskTrack - Todos os direitos reservados.
+</footer>
+
+<script type="module" src="js/auth.js"></script>
+</body>
+</html>

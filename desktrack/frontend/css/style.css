@@ -1,75 +1,153 @@
+/* style.css - Atualizado para o novo layout */
+
+/* Fontes e cores base */
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f7fafc; /* cinza claro */
-    color: #333;
-    line-height: 1.6;
-    padding: 20px;
-    padding: 20px;
+  font-family: 'Roboto', sans-serif;
+  color: #2d3748;
+  line-height: 1.6;
+}
+
+/* Sidebar estilo Manjaro */
+aside {
+  background: linear-gradient(135deg, #1a5e25 0%, #0f4b1a 100%);
+  min-height: 100vh;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+aside nav ul li a {
+  transition: all 0.3s ease;
+}
+
+aside nav ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(3px);
+}
+
+/* Cards */
+.bg-white {
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bg-white:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabeçalhos das seções */
+section > div:first-child {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+/* Botões */
+button {
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+/* Listas */
+#deviceList, #activityList {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Barra de rolagem personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#deviceList li, #activityList li {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Efeitos de hover nos itens da lista */
+#deviceList li:hover, #activityList li:hover {
+  background-color: #f7fafc;
+}
+
+/* Ícones */
+svg {
+  transition: all 0.2s ease;
+}
+
+.delete-activity:hover svg {
+  transform: scale(1.1);
+}
+
+/* Formulários */
+input, select, textarea {
+  transition: all 0.2s ease;
+  border: 1px solid #e2e8f0;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+  outline: none;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .flex.flex-col.md\:flex-row {
+    flex-direction: column;
   }
   
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
+  aside {
+    width: 100%;
+    min-height: auto;
   }
   
-  section {
-    margin-bottom: 2rem;
-    padding: 1.5rem;
-    background: #fff;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  main {
+    padding: 1rem;
   }
-  
-  h1, h2 {
-    color: #2d3748; /* cinza escuro */
-    margin-bottom: 0.5rem;
-  }
-  
-  p {
-    margin-bottom: 1rem;
-    color: #4a5568;
-  }
-  
-  a {
-    transition: background-color 0.3s ease;
-    color: #3182ce;
-  }
-  
-  a:hover {
-    background-color: #2b6cb0;
-    color: #fff;
-  }
-  
-  input, button {
-    transition: all 0.3s ease;
-    margin-top: 0.5rem;
-  }
-  
-  button:hover {
-    background-color: #2b6cb0;
-    transform: translateY(-2px);
-  }
-  
-  ul {
-    list-style: disc inside;
-  }
-  
-  h1, h2 {
-    color: #2d3748; /* cinza escuro */
-  }
-  
-  a {
-    transition: background-color 0.3s ease;
-  }
-  
-  a:hover {
-    background-color: #2b6cb0;
-  }
-  
-  input, button {
-    transition: all 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #2b6cb0;
-  }
+}
+
+/* Classes utilitárias adicionais */
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.transition {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-duration: 200ms;
+}
+
+/* Cores específicas para tipos de atividade */
+.bg-green-100 { background-color: #f0fff4; }
+.text-green-800 { color: #276749; }
+.bg-yellow-100 { background-color: #fffff0; }
+.text-yellow-800 { color: #975a16; }
+.bg-red-100 { background-color: #fff5f5; }
+.text-red-800 { color: #9b2c2c; }
+.bg-blue-100 { background-color: #ebf8ff; }
+.text-blue-800 { color: #2c5282; }
