@@ -1,4 +1,4 @@
-Site para auxilio no html/css : https://css-tricks.com/
+Site para auxilio no html/css : https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 
 1. Instalar dependências:
 ```bash
