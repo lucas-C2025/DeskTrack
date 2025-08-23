@@ -1,10 +1,22 @@
 {
-    "name": "desktrack",
-    "version": "1.0.0",
-    "scripts": {
-      "start:server": "json-server --watch backend/db.json --port 3000"
-    },
+  "name": "desktrack",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "db:reset": "prisma migrate reset --force",
+    "test": "npm run db:reset && node --experimental-vm-modules ./node_modules/.bin/jest src",
+    "test:coverage": "npm run db:reset && node --experimental-vm-modules ./node_modules/.bin/jest src --coverage"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
     "devDependencies": {
-      "json-server": "^0.17.0"
+        "json-server": "^0.17.0"
+    },
+    "dependencies": {
+        "@prisma/client": "^6.14.0",
+        "express": "^5.1.0",
+        "prisma": "^6.14.0"
     }
-  }
+}

@@ -1,0 +1,10 @@
+@server =http://localhost:3000
+//@createdDeviceId = {{createDevice.response.body.$.id}}
+
+POST {{server}}/devices
+Content-Type: application/json
+
+{
+    "nome":"ronaldo",
+    "ip": "10.10.0.10"
+}
