@@ -8,3 +8,13 @@ Content-Type: application/json
     "nome":"ronaldo",
     "ip": "10.10.0.10"
 }
+####
+POST {{server}}/activities
+Content-Type: application/json
+
+{
+    "descricao": "apenas testando",
+    "dispositivo": "test",
+    "tipo": "acontecimendo",
+    "data_hora": "2025-08-23"  
+}

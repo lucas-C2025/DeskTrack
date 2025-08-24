@@ -6,10 +6,10 @@ document.getElementById('loginForm').addEventListener('submit', async e => {
   const password = e.target.password.value;
 
   const user = await login(username, password);
-  if (user) {
+   if (user) {
     localStorage.setItem('user', JSON.stringify(user));
     window.location.href = 'dashboard.html';
   } else {
-    alert('Usuário ou senha inválidos');
+   alert('Usuário ou senha inválidos');
   }
 });

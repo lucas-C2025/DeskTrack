@@ -1,7 +1,7 @@
 import express from 'express';
-import activities from './models/activities.js';
-import devices from './models/devices.js';
-import users from './models/users.js';
+import activity from './models/activities.js';
+import device from './models/devices.js';
+import user from './models/users.js';
 
 
 class HttpError extends Error {
@@ -22,7 +22,7 @@ router.post('/activities', async (req, res) => {
   }
  
   try {
-    const createdActivities = await activities.create({ descricao, dispositivo,tipo,data_hora });
+    const createdActivities = await activity.create({ descricao, dispositivo,tipo,data_hora });
  
     return res.status(201).json(createdActivities);
   } catch (error) {
@@ -35,12 +35,12 @@ router.get('/activities', async (req, res) => {
  
   try {
     if (dispositivo) {
-      const filteredActivities = await activities.read({ dispositivo });
+      const filteredActivities = await activity.read({ dispositivo });
  
       return res.json(filteredActivities);
     }
  
-    const activities = await activities.read();
+    const activities = await activity.read();
  
     return res.json(activities);
   } catch (error) {
@@ -52,7 +52,7 @@ router.get('/activities/:id', async (req, res) => {
   const { id } = req.params;
  
   try {
-    const activities = await activities.readById(id);
+    const activities = await activity.readById(id);
  
     if (activities) {
       return res.json(activities);
@@ -74,7 +74,7 @@ router.put('/activities/:id', async (req, res) => {
   }
  
   try {
-    const updatedActivities = await activities.update({ descricao, dispositivo,tipo,data_hora, id });
+    const updatedActivities = await activity.update({ descricao, dispositivo,tipo,data_hora, id });
  
     return res.json(updatedActivities);
   } catch (error) {
@@ -86,7 +86,7 @@ router.delete('/activities/:id', async (req, res) => {
   const { id } = req.params;
  
   try {
-    await activities.remove(id);
+    await activity.remove(id);
  
     return res.send(204);
   } catch (error) {
@@ -105,7 +105,7 @@ router.post('/users', async (req, res) => {
   }
  
   try {
-    const createdusers = await users.create({ username,password });
+    const createdusers = await user.create({ username,password });
  
     return res.status(201).json(createdusers);
   } catch (error) {
@@ -118,12 +118,12 @@ router.get('/users', async (req, res) => {
  
   try {
     if (username) {
-      const filteredusers = await users.read({ username });
+      const filteredusers = await user.read({ username });
  
       return res.json(filteredusers);
     }
  
-    const users = await users.read();
+    const users = await user.read();
  
     return res.json(users);
   } catch (error) {
@@ -135,7 +135,7 @@ router.get('/users/:id', async (req, res) => {
   const { id } = req.params;
  
   try {
-    const users = await users.readById(id);
+    const users = await user.readById(id);
  
     if (users) {
       return res.json(users);
@@ -157,7 +157,7 @@ router.put('/users/:id', async (req, res) => {
   }
  
   try {
-    const updatedusers = await users.update({ username,password });
+    const updatedusers = await user.update({ username,password });
  
     return res.json(updatedusers);
   } catch (error) {
@@ -176,6 +176,29 @@ router.delete('/users/:id', async (req, res) => {
     throw new HttpError('Unable to delete a users');
   }
 });
+
+// ROTA para autenticação
+
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  console.log("ESTAMOS DENTRO DO ARQUIVO ROTAS.JS APÓS RECEBER REQUISIÇÃO");
+
+  try {
+    const userX = await user.read({ username });
+    console.log("a const user funcionou");
+    if (userX && userX.password === password) {
+      res.json(userX);
+    } else {
+      res.status(401).json({ message: "Usuário ou senha inválidos" });
+      console.log("chegamos onde deveria ter dado certo");
+    }
+  } catch (error) {
+    console.error("Erro no login:", error);
+    res.status(500).json({ message: "Erro no servidor" });
+  }
+});
+
  
 // ROTAS para devices
 
@@ -187,7 +210,7 @@ router.post('/devices', async (req, res) => {
   }
  
   try {
-    const createdDevice = await devices.create({ nome,ip });
+    const createdDevice = await device.create({ nome,ip });
  
     return res.status(201).json(createdDevice);
   } catch (error) {
@@ -200,24 +223,25 @@ router.get('/devices', async (req, res) => {
  
   try {
     if (nome) {
-      const filtereddevices = await devices.read({ nome });
+      const filtereddevices = await device.read({ nome });
  
       return res.json(filtereddevices);
     }
  
-    const devices = await devices.read();
+    const devices = await device.read();
  
     return res.json(devices);
   } catch (error) {
-    throw new HttpError('Unable to read devices');
-  }
+  console.error(error);
+  res.status(500).json({ error: 'Unable to read devices' });
+}
 });
  
 router.get('/devices/:id', async (req, res) => {
   const { id } = req.params;
  
   try {
-    const devices = await devices.readById(id);
+    const devices = await device.readById(id);
  
     if (devices) {
       return res.json(devices);
@@ -239,7 +263,7 @@ router.put('/devices/:id', async (req, res) => {
   }
  
   try {
-    const updateddevices = await devices.update({ nome,ip });
+    const updateddevices = await device.update({ nome,ip });
  
     return res.json(updateddevices);
   } catch (error) {
@@ -251,7 +275,7 @@ router.delete('/devices/:id', async (req, res) => {
   const { id } = req.params;
  
   try {
-    await devices.remove(id);
+    await device.remove(id);
  
     return res.send(204);
   } catch (error) {

@@ -1,51 +1,69 @@
-const API_BASE = 'http://localhost:3000';
+const API_URL = "http://localhost:3000"; // onde teu backend está rodando
 
-// Função auxiliar para requisições
-async function makeRequest(endpoint, method = 'GET', data = null) {
-  const options = {
-    method,
-    headers: { 'Content-Type': 'application/json' },
-  };
-  
-  if (data) options.body = JSON.stringify(data);
-  
-  const response = await fetch(`${API_BASE}${endpoint}`, options);
-  
-  if (!response.ok) {
-    throw new Error(`API request failed: ${response.status}`);
-  }
-  
-  return response.json();
-}
-
-// Dispositivos
+// -------- DEVICES --------
 export async function getDevices() {
-  return makeRequest('/devices');
+  const res = await fetch(`${API_URL}/devices`);
+  if (!res.ok) throw new Error("Erro ao buscar dispositivos");
+  return res.json();
 }
 
 export async function addDevice(device) {
-  return makeRequest('/devices', 'POST', device);
+  const res = await fetch(`${API_URL}/devices`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(device),
+  });
+  if (!res.ok) throw new Error("Erro ao adicionar dispositivo");
+  return res.json();
 }
 
 export async function deleteDevice(id) {
-  return makeRequest(`/devices/${id}`, 'DELETE');
+  const res = await fetch(`${API_URL}/devices/${id}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) throw new Error("Erro ao excluir dispositivo");
+  return true;
 }
 
-// Atividades
+// -------- ACTIVITIES --------
 export async function getActivities() {
-  return makeRequest('/activities');
+  const res = await fetch(`${API_URL}/activities`);
+  if (!res.ok) throw new Error("Erro ao buscar atividades");
+  return res.json();
 }
 
 export async function addActivity(activity) {
-  return makeRequest('/activities', 'POST', activity);
+  const res = await fetch(`${API_URL}/activities`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(activity),
+  });
+  if (!res.ok) throw new Error("Erro ao adicionar atividade");
+  return res.json();
 }
 
 export async function deleteActivity(id) {
-  return makeRequest(`/activities/${id}`, 'DELETE');
+  const res = await fetch(`${API_URL}/activities/${id}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) throw new Error("Erro ao excluir atividade");
+  return true;
 }
 
-// Autenticação
+// -------- LOGIN --------
+
 export async function login(username, password) {
-  const users = await makeRequest(`/users?username=${username}&password=${password}`);
-  return users.length ? users[0] : null;
+  try {
+    const res = await fetch(`${API_URL}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (err) {
+    console.error("Erro no login:", err);
+    return null;
+  }
 }

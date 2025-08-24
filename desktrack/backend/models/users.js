@@ -1,7 +1,7 @@
 import prisma from '../base_dados.js';
  
 async function create({ username,password }) {
-  const createUser= await prisma.devices.create({
+  const createUser= await prisma.users.create({
     data: { username,password },
   });
  
