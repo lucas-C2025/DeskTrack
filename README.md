@@ -2,12 +2,13 @@ Site para auxilio no html/css : https://css-tricks.com/snippets/css/a-guide-to-f
 
 1. Instalar dependências:
 ```bash
+cd desktrack/
 npm install
 ```
 
 2. Rodar json-server:
 ```bash
-npm run start:server
+node desktrack/backend/express.js
 ```
 
 3. Abrir os arquivos HTML em um navegador.
