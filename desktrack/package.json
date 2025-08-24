@@ -11,12 +11,14 @@
   "prisma": {
     "seed": "node prisma/seed.js"
   },
-    "devDependencies": {
-        "json-server": "^0.17.0"
-    },
-    "dependencies": {
-        "@prisma/client": "^6.14.0",
-        "express": "^5.1.0",
-        "prisma": "^6.14.0"
-    }
+  "devDependencies": {
+    "json-server": "^0.17.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.14.0",
+    "bcrypt": "^6.0.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^6.14.0"
+  }
 }

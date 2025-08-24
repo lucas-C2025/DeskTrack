@@ -2,6 +2,10 @@ import express from 'express';
 import activity from './models/activities.js';
 import device from './models/devices.js';
 import user from './models/users.js';
+// novos imports para criação/teste dos webtokens
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import { isAuthenticated } from './autenticacao/auten.js';
 
 
 class HttpError extends Error {
@@ -14,7 +18,7 @@ class HttpError extends Error {
 // ROTAS para activities
 const router = express.Router();
  
-router.post('/activities', async (req, res) => {
+router.post('/activities', isAuthenticated, async (req, res) => {
   const { descricao, dispositivo,tipo,data_hora } = req.body;
  
   if (!descricao || !dispositivo || !tipo || !data_hora) {
@@ -30,7 +34,7 @@ router.post('/activities', async (req, res) => {
   }
 });
  
-router.get('/activities', async (req, res) => {
+router.get('/activities',isAuthenticated, async (req, res) => {
   const { dispositivo } = req.query;
  
   try {
@@ -48,7 +52,7 @@ router.get('/activities', async (req, res) => {
   }
 });
  
-router.get('/activities/:id', async (req, res) => {
+router.get('/activities/:id',isAuthenticated, async (req, res) => {
   const { id } = req.params;
  
   try {
@@ -64,7 +68,7 @@ router.get('/activities/:id', async (req, res) => {
   }
 });
  
-router.put('/activities/:id', async (req, res) => {
+router.put('/activities/:id',isAuthenticated, async (req, res) => {
   const { descricao, dispositivo,tipo,data_hora } = req.body;
  
   const id = req.params.id;
@@ -82,7 +86,7 @@ router.put('/activities/:id', async (req, res) => {
   }
 });
  
-router.delete('/activities/:id', async (req, res) => {
+router.delete('/activities/:id',isAuthenticated, async (req, res) => {
   const { id } = req.params;
  
   try {
@@ -169,7 +173,7 @@ router.delete('/users/:id', async (req, res) => {
   const { id } = req.params;
  
   try {
-    await users.remove(id);
+    await user.remove(id);
  
     return res.send(204);
   } catch (error) {
@@ -180,29 +184,72 @@ router.delete('/users/:id', async (req, res) => {
 // ROTA para autenticação
 
 router.post('/login', async (req, res) => {
+try {
+
   const { username, password } = req.body;
+  const {id: userID, password: hash} = await user.read({ username });
 
-  console.log("ESTAMOS DENTRO DO ARQUIVO ROTAS.JS APÓS RECEBER REQUISIÇÃO");
-
-  try {
-    const userX = await user.read({ username });
-    console.log("a const user funcionou");
-    if (userX && userX.password === password) {
-      res.json(userX);
-    } else {
-      res.status(401).json({ message: "Usuário ou senha inválidos" });
-      console.log("chegamos onde deveria ter dado certo");
-    }
+  const match = bcrypt.compare(password, hash, (err, match)=>{
+    if (err) throw err;
+    console.log("Estamos no campo match")
+    if (match){
+    console.log("Estamos no campo IF match")
+    const token = jwt.sign(
+      {userID},
+      process.env.JWT_SECRET,
+      {expiresIn:3600} // 1 hora de prazo
+    );
+    return res.json({auth: true, token});
+  } else{
+    console.log("Estamos no campo ELSE o IF deu errado")
+    throw new Error ('User not found');
+  } 
+    
+  });   
   } catch (error) {
     console.error("Erro no login:", error);
-    res.status(500).json({ message: "Erro no servidor" });
+    console.log("Estamos no campo CATCH tudo deu errado");
+    res.status(500).json({ message: "Erro no servidor | User not found" });    
   }
 });
+
+router.get('/users/me', isAuthenticated, async (req, res) => {
+  try {
+    const userId = req.userId;
+ 
+    const userX = await user.readById(userId);
+ 
+    delete userX.password;
+ 
+    return res.json(userX);
+  } catch (error) {
+    throw new HttpError('Unable to find user', 400);
+  }
+});
+
+
+// router.post('/login', async (req, res) => {
+//   const { username, password } = req.body;
+  
+//   try {
+//     const userX = await user.read({ username });
+//     if (userX && userX.password === password) {
+//       res.json(userX);
+//     } else {
+//       res.status(401).json({ message: "Usuário ou senha inválidos" });
+//     }
+//   } catch (error) {
+//     console.error("Erro no login:", error);
+//     res.status(500).json({ message: "Erro no servidor" });
+//   }
+// });
+
+
 
  
 // ROTAS para devices
 
-router.post('/devices', async (req, res) => {
+router.post('/devices', isAuthenticated, async (req, res) => {
   const { nome,ip } = req.body;
  
   if (!nome || !ip ) {
@@ -218,7 +265,7 @@ router.post('/devices', async (req, res) => {
   }
 });
  
-router.get('/devices', async (req, res) => {
+router.get('/devices',isAuthenticated, async (req, res) => {
   const { nome } = req.query;
  
   try {
@@ -237,7 +284,7 @@ router.get('/devices', async (req, res) => {
 }
 });
  
-router.get('/devices/:id', async (req, res) => {
+router.get('/devices/:id',isAuthenticated, async (req, res) => {
   const { id } = req.params;
  
   try {
@@ -253,7 +300,7 @@ router.get('/devices/:id', async (req, res) => {
   }
 });
  
-router.put('/devices/:id', async (req, res) => {
+router.put('/devices/:id',isAuthenticated, async (req, res) => {
   const { nome,ip } = req.body;
  
   const id = req.params.id;
@@ -271,7 +318,7 @@ router.put('/devices/:id', async (req, res) => {
   }
 });
  
-router.delete('/devices/:id', async (req, res) => {
+router.delete('/devices/:id',isAuthenticated, async (req, res) => {
   const { id } = req.params;
  
   try {
