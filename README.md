@@ -4,11 +4,13 @@ Site para auxilio no html/css : https://css-tricks.com/snippets/css/a-guide-to-f
 ```bash
 cd desktrack/
 npm install
+cd backend/
+npx prisma generate
 ```
 
-2. Rodar json-server:
+2. Rodar express:
 ```bash
-node desktrack/backend/express.js
+node express.js
 ```
 
 3. Abrir os arquivos HTML em um navegador.
